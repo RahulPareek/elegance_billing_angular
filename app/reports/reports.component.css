@@ -1,0 +1,7 @@
+button[type="button"] {
+    margin-right: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}

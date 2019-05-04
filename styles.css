@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+   }
+   
+   *:before,
+   *:after {
+    box-sizing: border-box;
+   }
+   
+   html,
+   body {
+    height: 100%;
+    position: relative;
+    background-color: rgba(243, 237, 235, 0.288);
+    font-family: 'Work Sans', sans-serif;
+   }
+   .main-container {
+    min-height: 100vh; /* will cover the 100% of viewport */
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 100px; /* height of your footer */
+   }
+   
+   footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+   }

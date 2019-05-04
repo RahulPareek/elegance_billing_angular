@@ -1,0 +1,222 @@
+<h3>New Bill</h3>
+
+
+<form (ngSubmit)="billCreateForm.form.valid && onFormSubmit()" #billCreateForm="ngForm">
+
+  <div class="form-group">
+    <label for="clientName">Name</label>
+    <input type="text" class="form-control" id="clientName" [(ngModel)]="client.name"
+                      name="name" disabled>
+  </div>
+
+  <div class="form-group">
+      <label for="clientAddress">Address</label>
+      <input type="text" class="form-control" id="cientAddress" 
+                          [(ngModel)]="client.address" name="address" disabled>
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-6">
+      <label for="mobileNo">Mobile No</label>
+      <input type="text" class="form-control" id="MobileNo" 
+              [(ngModel)]="client.mobile_no" name = "mobileNo" disabled>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="emailId">Email Id</label>
+        <input type="email" class="form-control" id="emailId" 
+         [(ngModel)]="client.email_id" name="emailId" disabled>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-3">
+    <label>Company Name</label>
+    <select class="form-control" [(ngModel)]="companyName" name="companyName">
+      <option [value]="'Elegance Wellness'" selected="selected">Elegance Wellness</option>
+      <option [value]="'Elegance Health Total'">Elegance Health Total</option>
+      <option [value]="'Sparkle Laser'">Sparkle Laser</option>
+    </select>
+  </div>
+  </div>
+
+  <div *ngFor="let billDescription of billDescriptions;let i = index;trackBy: trackByFn" class="form-row">
+
+    
+  <div class="form-group col-md-3">
+      <label>Service Category</label>
+      <br>
+      <select class="form-control" [(ngModel)]="serviceCategorySelected[i].service_name"  
+                            name="servicesCategories{{i}}">
+          <option id="servicesCategories{{j}}" (click)="onCategorySelected(category, i)" 
+          [value]="category.service_name" 
+          *ngFor="let category of servicesCategories;let j= index;trackBy: trackCategories">
+          {{category.service_name}}</option>
+      </select>
+    
+    </div>
+  
+    <div class="form-group col-md-3">
+        <label>Description</label>
+        <br>
+      <select class="form-control" name="service{{i}}" [(ngModel)]="subServiceSelected[i].sub_service">
+          <option (click)="onServiceChanged(service, i)" id="service{{k}}" 
+          [ngValue]="service.sub_service" *ngFor="let service of serviceCategorySelected[i].service;let k=index;trackBy:trackServices">
+          {{service.sub_service}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-md-2">
+        <label for="noOfSessions{{i}}">No. Of Sessions</label>
+        <input type="text" class="form-control" id="noOfSessions{{i}}" 
+        (blur)="onAmountChange()"
+        [(ngModel)]="billDescription.no_of_sessions" name="noOfSessions{{i}}">
+    </div>
+
+    <div class="form-group col-md-2">
+        <label for="packageAmount{{i}}">Package Amount</label>
+        <input type="text" class="form-control" id="packageAmount{{i}}" (blur)="onAmountChange()"
+        [(ngModel)]="billDescription.package_amount" name="packageAmount{{i}}">
+    </div>
+
+    <div class="col-md-2">
+      <img src="../assets/images/trash.png" alt="delete" (click)=removeBillDescription(i)>
+    </div>
+
+  </div>
+
+  <img src="../assets/images/plus.png" (click)="addBillDescription()">
+  <br>
+  <br>
+
+
+  <div class="form-row">
+
+    <div class="form-group" class="col-md-2">
+      <span>Total Amount: {{bill.total_amount}}</span>
+     </div>
+ 
+     <div class="form-check form-check-inline">
+      <label>Discount</label>
+    </div>
+  
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="10" 
+      [(ngModel)]="discountPercent" name="discount" (change)="calculateDiscountedAmount()">
+      <label>10%</label>
+    </div>
+  
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="20"
+          [(ngModel)]="discountPercent" name="discount" (change)="calculateDiscountedAmount()">
+      <label>20%</label>
+    </div>
+
+
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" value="0" name="discount" 
+            [(ngModel)]="discountPercent" (change)="calculateDiscountedAmount()">
+      <label>No Discount</label>
+    </div>
+ 
+   </div>
+
+  <br>
+  <br>
+
+  <div class="form-row">
+
+   <div class="form-group" class="col-md-4">
+      <label for="receivedAmount">Received Amount</label>
+      <input type="text" class="form-control" id="receivedAmount" (blur)="calculateBalance()"
+              [(ngModel)]="bill.received_amount" name="receivedAmount">
+    </div>
+
+    <div class="form-group" class="col-md-4">
+      <label for="balance">Balance</label>
+      <input type="text" class="form-control" id="balance" 
+              [(ngModel)]="bill.balance" name="balance" disabled>
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="form-check form-check-inline">
+    <label>Mode Of Payment</label>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" value="Cash" 
+    [(ngModel)]="paymentDetails.mode_of_payment" name="cash">
+    <label>Cash</label>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" value="Cheque"
+        [(ngModel)]="paymentDetails.mode_of_payment" name="cheque">
+    <label>Cheque</label>
+  </div>
+
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" value="Credit Card/NEFT" 
+        [(ngModel)]="paymentDetails.mode_of_payment" name="creditCard/NEFT">
+    <label>Credit Card/NEFT</label>
+  </div>
+
+  
+  <div class="form-row">
+
+    <div class="form-group col-md-5">
+      <label for="cardNo">Card No</label>
+      <input type="text" class="form-control" id="cardNo" 
+      [(ngModel)]="paymentDetails.card_no" name="cardNo">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="date">Date</label>
+        <input type="date" class="form-control" id="date" 
+        [(ngModel)]="paymentDetails.date_of_payment" name="date">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="approvalCode">Approval Code</label>
+        <input type="text" class="form-control" id="approvalCode" 
+        [(ngModel)]="paymentDetails.approval_code" name="approvalCode">
+    </div>
+
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group col-md-5">
+      <label for="chequeNo">Cheque No</label>
+      <input type="text" class="form-control" id="chequeNo" 
+      [(ngModel)]="paymentDetails.cheque_no" name="chequeNo">
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="bankName">Bank Name</label>
+        <input type="text" class="form-control" id="bankName" 
+        [(ngModel)]="paymentDetails.bank_name" name="bankName">
+    </div>
+
+    <div class="form-group col-md-4">
+        <label for="bookingDoneName">Booking Done By</label>
+        <input type="text" class="form-control" id="bookingDoneName" 
+        [(ngModel)]="paymentDetails.booking_done_name" name="bookingDoneName">
+    </div>
+
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!submitButton">Submit</button>
+
+</form>
+
+
+<br>
+
+<span *ngIf="success" class="text text-success">{{success}}</span>
+<span *ngIf="error" class="text text-danger">{{error}}</span>

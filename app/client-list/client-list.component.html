@@ -1,0 +1,35 @@
+<div>
+
+    <div *ngIf="error"><span class="text-danger">{{error}}</span></div>
+
+  <table *ngIf="clients.length > 0" class="table">
+
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Mobile No.</th>
+        <th scope="col">Email Id</th>
+        <th scope="col">  </th>
+        <th scope="col">  </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{client.name}}</td>
+        <td>{{client.address}}</td>
+        <td>{{client.mobile_no}}</td>
+        <td>{{client.email_id}}</td>
+        <td><a [routerLink]="['/client/edit', client.id]">
+                      <img src="../assets/images/pencil.png"></a></td>
+        <td><a [routerLink]="['/bill/create/client', client.id]">
+                      <img src="../assets/images/document.png"></a></td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  
+
+</div>

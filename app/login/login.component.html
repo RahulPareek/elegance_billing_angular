@@ -1,0 +1,49 @@
+<br>
+<br>
+<br>
+<br>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+
+      <div class="card">
+        <img class="card-img-top mx-auto d-block" src="../assets/images/elegance_logo.png">
+
+        <div class="card-body">
+
+          <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && onFormSubmit()">
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username"
+                      name = "username" [(ngModel)]="user.username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="username"
+                        name = "username" [(ngModel)]="user.password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+            <br>
+            <span *ngIf="error" class="text text-danger">{{error}}</span>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-4"></div>
+
+  </div>
+
+</div>

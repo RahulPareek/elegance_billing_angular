@@ -1,0 +1,132 @@
+
+<!-- <div *ngIf="!httpService.isLoggedIn">
+
+  <app-login></app-login>
+
+</div> -->
+
+
+
+<div *ngIf="httpService.isLoggedIn">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+
+  <a class="navbar-brand" href="#">
+    <img src="../assets/images/elegance_logo.png" height="50" width="150">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link" [routerLink]="['/reports']">Reports</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="" (click)="logout()">Logout</a>
+        </li>
+    </ul>
+  </div>
+
+</nav>
+
+<div *ngIf="router.url =='/'" class="jumbotron jumbotron-fluid">
+  <div class="container">
+
+    <h1>Elegance Wellness</h1>
+
+  </div>
+</div>
+
+<br>
+<br>
+
+
+<div class="container">
+  <div *ngIf="router.url == '/' || router.url.includes('/client/search')" class="row">
+
+    <div class="col-md-2"></div>
+
+
+        <form class="col-md-8" #searchBar="ngForm">
+          <div class="input-group mb-3 centered">
+     
+           <input type="text" class="form-control"[(ngModel)]="searchClient" name="searchClient" placeholder="Search by name">
+
+            <div class="input-group-append">
+              <a [routerLink]="['/client/search']" [queryParams]="{clientName: searchClient}"><button type="submit" class="btn btn-primary">Search</button></a>
+            </div>
+          </div>
+        </form>
+
+
+    <div class="col-md-2"></div>
+
+  </div>
+
+  <br>
+
+
+
+  <div *ngIf="router.url == '/'" class="row">
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+
+    <div class="card-deck">
+
+      <a [routerLink]="['/client/create']" class="card custom-card text-center">
+        
+        <img class="card-img-top" src="/assets/images/add_client.jpeg" alt="Card image"/>
+            <div class="card-body">
+                <h5 class="card-title">Add Client</h5>
+            </div>
+           
+      </a>
+
+      <a [routerLink]="['/bill/edit']" class="card custom-card text-center">
+        
+        <img class="card-img-top" src="/assets/images/manage_bills.jpeg" alt="Card image"/>
+            <div class="card-body">
+                <h5 class="card-title">Manage Bills</h5>
+            </div>
+          
+      </a>
+
+    </div>
+
+  </div>
+
+    <div class="col-md-2"></div>
+
+  </div>
+
+
+</div>
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+  <br>
+  <br>
+  <br>
+
+
+  <footer *ngIf="router.url!='/login'" class="footer">
+    <div class="container">
+      <span class="text-muted">&copy; {{year}} Elegance Wellness | All Rights  Reserved</span>
+    </div>
+  </footer>
+
+

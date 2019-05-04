@@ -1,0 +1,76 @@
+<div class="container-fluid">
+
+
+  <h2>Reports</h2>
+
+  <br>
+
+  <div class="form-inline">
+
+    <div class="col-md-4">
+
+      <button type="button" class="btn btn-outline-primary" (click)="getReport('today')">Today</button>
+
+      <button type="button" class="btn btn-outline-success" (click)="getReport('week')">Last Week</button>
+
+      <button type="button" class="btn btn-outline-warning" (click)="getReport('month')">Last Month</button>
+
+    </div>
+    
+
+    <div class="form-group">
+
+      <label class="radio-inline" for="customRange" style="margin-right:10px">
+      <input type="radio" name="customRange" id="customRange" name="customRange"
+              [(ngModel)]="customRange" value="true">Custom Range</label>
+
+    </div>
+
+    <form *ngIf="customRange" #custom_range="ngForm">
+
+    <div class="form-group" style="margin-right:10px">
+        <label for="startDate">Start Date</label>
+        <input style="margin-right:5px" type="date" class="form-control" id="startDate" 
+         name="startDate" [(ngModel)]="startDate" required>
+      </div>
+
+
+    <div class="form-group">
+      <label for="Enddate">End Date</label>
+      <input style="margin-right:5px" type="date" class="form-control" id="Enddate" 
+         name="endDate" [(ngModel)]="endDate" required>
+    </div>
+
+    <button *ngIf="customRange" type="button" class="btn btn-primary" 
+          (click)="getReport('custom')">Submit</button>
+   
+    </form>
+
+</div>
+
+  <br>
+
+  <div *ngIf="reports">
+    <table class="table table-striped">
+
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Mode Of Payment</th>
+          <th scope="col">Count</th>
+          <th scope="col">Sub-Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let report of reports">
+          <td>{{report.mode_of_payment}}</td>
+          <td>{{report.count}}</td>
+          <td>{{report.sub_total}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+ 
+</div>
